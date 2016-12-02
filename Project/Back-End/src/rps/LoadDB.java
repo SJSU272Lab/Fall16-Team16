@@ -28,6 +28,7 @@ public class LoadDB {
 	public static void loadData()
 	{
 		//load data from cloudantDB to statsMove
+		
 	}
 	
 	public void updateMove()
