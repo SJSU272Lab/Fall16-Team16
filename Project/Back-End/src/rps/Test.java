@@ -6,11 +6,12 @@ import java.util.Scanner;
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stubSystem.out.println(MoveType.ROCK);
+	
 		RockPaperScissorController controller = RockPaperScissorController.getInstance();
 		controller.loadData();
+		//controller.printHash();
+		
 		Scanner in = new Scanner(System.in);
 		String match = "";
 		        
@@ -19,12 +20,16 @@ public class Test {
 			String usrInput  = in.nextLine();
 			MoveType userMove = MoveType.valueOf(usrInput.toUpperCase());
 			//get smartMove 
-			MoveType machineMove = controller.getSmartMove(match);
+			MoveType machineMove = controller.getSmartThrow(match);
 			System.out.println("Machine thrown : " + machineMove);
-			match += userMove.getSymbol();
-			match += machineMove.getSymbol();
+			match += userMove;
+			match += machineMove;
+			System.out.println(match);
 			controller.printHash();
 		}
+		
 	}
+	
+
 
 }

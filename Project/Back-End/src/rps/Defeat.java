@@ -1,21 +1,19 @@
 package rps;
 
-public class Defeat {
-	private String verb;
-	private String defeatedID;
+public enum Defeat{
+	R(MoveType.P),
+	P(MoveType.S),
+	S(MoveType.R);
 	
-	public Defeat(String verb, String defeatedID){
-		this.verb = verb;
-		this.defeatedID = defeatedID;
+	private MoveType defeating;
+	
+	Defeat(MoveType defeating)
+	{
+		this.defeating = defeating;
 	}
 	
-	public String getVerb()
+	public MoveType getDefeating()
 	{
-		return verb;
-	}
-	
-	public String getDefeatID()
-	{
-		return defeatedID;
+		return defeating;
 	}
 }

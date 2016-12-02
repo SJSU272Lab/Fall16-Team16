@@ -1,9 +1,9 @@
 package rps;
 
 public enum MoveType {
-	ROCK(0,"R"),
-	PAPER(1,"P"),
-	SCISSOR(2,"S");
+	R(0,"Rock"),
+	P(1,"Paper"),
+	S(2,"Scissor");
 	
 	private int rank;
 	private String symbol;
@@ -24,3 +24,5 @@ public enum MoveType {
     	return symbol;
     }
 }
+
+
