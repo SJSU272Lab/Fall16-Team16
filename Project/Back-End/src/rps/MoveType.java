@@ -3,7 +3,7 @@ package rps;
 public enum MoveType {
 	R(0,"Rock"),
 	P(1,"Paper"),
-	S(2,"Scissor");
+	S(2,"Scissors");
 	
 	private int rank;
 	private String symbol;

@@ -17,6 +17,7 @@ public class RockPaperScissorController {
 	public static RockPaperScissorController getInstance(){
 		if (controller == null) {
 			controller = new RockPaperScissorController() ;
+			controller.loadData();
 			return controller ;
 		}
 		else {
@@ -36,7 +37,8 @@ public class RockPaperScissorController {
 	public void loadData()
 	{
 		if(controller!=null){
-			//String initialRecords = "RPRPPPSSPRSPRSRPSSSPSRPRRRSPSRPRSPSR";
+			String initialRecords = "PSPRPRPSPSSSSRPPPRPSSSSRRSSP";
+			//RRRPSRRPSRPPSSSR
 			//load data inside hashmap
 			
 			controller.nthCurrentMove.add("RP");
@@ -144,8 +146,7 @@ public class RockPaperScissorController {
 			updateHashMap(match);
 			ArrayList<int[]> frequencies = new ArrayList<int[]>();
 			ArrayList<String[]> keys = new ArrayList<String[]>();
-			//new int[nthCurrentMove.size() * MoveType.values().length];
-			//String[] keys = new String[nthCurrentMove.size() * MoveType.values().length];
+			
 			int start = 2;
 			for(int i = 0 ; i < nthCurrentMove.size() ; i++){
 				if(match.length() < start)

@@ -9,7 +9,7 @@ public class Test {
 		// TODO Auto-generated method stubSystem.out.println(MoveType.ROCK);
 	
 		RockPaperScissorController controller = RockPaperScissorController.getInstance();
-		controller.loadData();
+		
 		//controller.printHash();
 		
 		Scanner in = new Scanner(System.in);
