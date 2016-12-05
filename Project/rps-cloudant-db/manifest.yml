@@ -1,0 +1,10 @@
+applications:
+- path: .
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: rps-cloudant-db
+  host: rps-cloudant-db
+  disk_quota: 1024M
+  services:
+  - rps-cloudant-db-cloudantNoSQLDB
