@@ -68,10 +68,10 @@ function compare (userMove, botMove)
 function postMessageToSlack(){
     var xmlhttp = new XMLHttpRequest(),
         webhook_url = "https://hooks.slack.com/services/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",
-        myJSONStr = 'payload= {'+
-                    '"username": "botrps",' +
-                    '"icon_url": "example.com/img/icon.jpg",' +
-                    '"attachments": [{' +
+        // myJSONStr = 'payload= {'+
+        //             '"username": "botrps",' +
+        //             '"icon_url": "example.com/img/icon.jpg",' +
+        myJSONStr = '{"text": "My testing rps" , "attachments": [{' +
                     '"fallback": "This attachement isnt supported.",' +
                     '"title": "VALENTINE DAY OFFER",' +
                     '"color": "#9C1A22",' +
