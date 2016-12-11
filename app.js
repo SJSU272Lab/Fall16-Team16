@@ -16,7 +16,6 @@ app.listen(port, function () {
 });
 app.post('/hello', function (req, res) {
   var userName = req.body.user_name;
-  console.log(req.body);
   var botPayload = {
     text : 'Hello ' + userName + ', welcome to Devdactic Slack channel! I\'ll be your guide.'
   };
