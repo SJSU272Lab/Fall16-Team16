@@ -9,6 +9,7 @@ const START = "start";
 const ROCK = "r";
 const PAPER = "p";
 const SCISSORS = "s";
+const MaxInputLen = 10;
 
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,9 +18,12 @@ app.use(bodyParser.json())
 app.post('/startGame', function(req, res) {
   var userName = req.body.user_name;
   var userID = req.body.user_id;
-  var input = req.body.text;
+  var input = req.body.text.trim();
+  var userMove = input[input.length-1];
   var responseText;
-  if (input != ROCK && input != PAPER && input != SCISSORS)
+
+  if ((input.length != MaxInputLen) ||
+      (userMove != ROCK && userMove != PAPER && userMove != SCISSORS))
   {
     responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
   }
@@ -27,7 +31,7 @@ app.post('/startGame', function(req, res) {
     // Call GetBestMove API with userName
     // Body: { user_id: "12345" }
     var botMove = 's';
-    responseText = compare(input, botMove);
+    responseText = compare(userMove, botMove);
     // Call Cloudant API with userName, Usermove, Botmove
     // var xhr = new XMLHttpRequest();
     // xhr.open("GET", "https://rps-cloudant-db.mybluemix.net/api/match", false)
