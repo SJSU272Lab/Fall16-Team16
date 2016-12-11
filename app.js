@@ -15,7 +15,11 @@ const MaxInputLen = 10;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-app.post('/startGame', function(req, res) {
+app.get('/start', function(req, res) {
+  postMessageToSlack();
+});
+app.post('/game', function(req, res) {
+
   var userName = req.body.user_name;
   var userID = req.body.user_id;
   var input = req.body.text.trim();
@@ -28,7 +32,6 @@ app.post('/startGame', function(req, res) {
     responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
   }
   else {
-    postMessageToSlack();
     // Call GetBestMove API with userName
     // Body: { user_id: "12345" }
     var botMove = 's';
