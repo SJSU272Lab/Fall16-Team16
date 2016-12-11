@@ -15,7 +15,7 @@ const MaxInputLen = 10;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-app.get('/start', function(req, res) {
+app.post('/start', function(req, res) {
   postMessageToSlack();
 });
 app.post('/game', function(req, res) {
