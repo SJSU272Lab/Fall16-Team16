@@ -104,11 +104,12 @@ function postMessageToSlack(){
                         '{"name": "paper",' +
                          '"text": "Paper",' +
                          '"type": "button",' +
-                         '"value": "p},' +
+                         '"value": "p"},' +
                          '{"name": "rock",' +
                           '"text": "Rock",' +
                           '"type": "button",' +
                           '"value": "r"}]}]}';
+        console.log(myJSONStr);
     xmlhttp.open('POST', webhook_url, false);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlhttp.send(myJSONStr);
