@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Project/Back-End/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 8 [1.8.0_112]">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/hluong/GitHubProject/Fall16-Team16/Project/Back-End/dist/cloudant-client-2.5.0.jar"/>
+	<classpathentry kind="lib" path="/Users/hluong/GitHubProject/Fall16-Team16/Project/Back-End/dist/json.jar"/>
+	<classpathentry kind="lib" path="/Users/hluong/GitHubProject/Fall16-Team16/Project/Back-End/dist/restlet-json.jar"/>
+	<classpathentry kind="lib" path="/Users/hluong/GitHubProject/Fall16-Team16/Project/Back-End/dist/restlet.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
