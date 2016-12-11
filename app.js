@@ -46,7 +46,7 @@ app.post('/game', function(req, res) {
   //   xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
   // }
   var botPayload = {
-    text : userID 
+    text : 'Hello , welcome to Devdactic Slack channel! I\'ll be your guide.' 
   };
 
   if (userName !== 'slackbot') {
