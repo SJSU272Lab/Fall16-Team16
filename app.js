@@ -92,24 +92,23 @@ function postMessageToSlack(){
         //             '"text": "Just click the site names and start buying. Get *extra reduction with the offer code*, if provided.",' +
         //             '"thumb_url": "http://example.com/thumbnail.jpg" }]}';
         myJSONStr = '{"attachments": [' +
-                     '{"text": "Please pick [r]ock, [p]aper or [s]cissors.",' +
+                     '{"text": "Please pick one:",' +
                       '"fallback": "You are unable to pick",' +
                       '"color": "#9C1A22",' +
-                      '"attachment_type": "default",' +
+                    //  '"attachment_type": "default",' +
                       '"actions": [' +
                        '{"name": "rock",' +
-                        '"text": "Rock",' +
+                        '"text": ":fist:",' +
                         '"type": "button",' +
                         '"value": "r"},' +
                         '{"name": "paper",' +
-                         '"text": "Paper",' +
+                         '"text": ":hand:",' +
                          '"type": "button",' +
                          '"value": "p"},' +
-                         '{"name": "rock",' +
-                          '"text": "Rock",' +
+                         '{"name": "scissors",' +
+                          '"text": ":v:",' +
                           '"type": "button",' +
-                          '"value": "r"}]}]}';
-        console.log(myJSONStr);
+                          '"value": "s"}]}]}';
     xmlhttp.open('POST', webhook_url, false);
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xmlhttp.send(myJSONStr);
