@@ -8,6 +8,19 @@ var port = process.env.PORT || 1337;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
+app.post('/startGame', function(req, res) {
+  var userName = req.body.user_name;
+  var userMove = req.body.text;
+  var botPayload = {
+    text : userMove
+  };
+  // Loop otherwise..
+  if (userName !== 'slackbot') {
+    return res.status(200).json(botPayload);
+  } else {
+    return res.status(200).end();
+  }
+});
 // test route
 app.get('/', function (req, res) { res.status(200).send('Hello world!'); });
 
