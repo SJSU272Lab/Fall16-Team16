@@ -36,6 +36,7 @@ app.post('/startGame', function(req, res) {
     // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://rps-cloudant-db.mybluemix.net/api/update");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
   }
   var botPayload = {
