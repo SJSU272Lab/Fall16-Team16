@@ -19,32 +19,34 @@ app.post('/start', function(req, res) {
   postMessageToSlack();
 });
 app.post('/game', function(req, res) {
-
-  var userName = req.body.user_name;
-  var userID = req.body.user_id;
-  var input = req.body.text.trim();
-  var userMove = input[input.length-1];
-  var responseText;
-
-  if ((input.length != MaxInputLen) ||
-      (userMove != ROCK && userMove != PAPER && userMove != SCISSORS))
-  {
-    responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
-  }
-  else {
-    // Call GetBestMove API with userName
-    // Body: { user_id: "12345" }
-    var botMove = 's';
-    responseText = compare(userMove, botMove);
-    // Call Cloudant API with user_id, user_move, bot_move
-    // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://rps-cloudant-db.mybluemix.net/api/update");
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
-  }
+  var userID = req.body.user.id;
+  var userName = req.body.user.name;
+  var value = req.body.actions[0].value;
+  // var userName = req.body.user_name;
+  // var userID = req.body.user_id;
+  // var input = req.body.text.trim();
+  // var userMove = input[input.length-1];
+  // var responseText;
+  //
+  // if ((input.length != MaxInputLen) ||
+  //     (userMove != ROCK && userMove != PAPER && userMove != SCISSORS))
+  // {
+  //   responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
+  // }
+  // else {
+  //   // Call GetBestMove API with userName
+  //   // Body: { user_id: "12345" }
+  //   var botMove = 's';
+  //   responseText = compare(userMove, botMove);
+  //   // Call Cloudant API with user_id, user_move, bot_move
+  //   // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open("POST", "https://rps-cloudant-db.mybluemix.net/api/update");
+  //   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  //   xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
+  // }
   var botPayload = {
-    text : responseText
+    text : userID + ". value is " + value
   };
 
   if (userName !== 'slackbot') {
