@@ -45,15 +45,20 @@ app.post('/game', function(req, res) {
   //   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   //   xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
   // }
-  var botPayload = {
-    text : 'Hello , welcome to Devdactic Slack channel! I\'ll be your guide.' 
-  };
+  // var botPayload = {
+  //   text : 'Hello , welcome to Devdactic Slack channel! I\'ll be your guide.'
+  // };
+  //
+  // if (userName !== 'slackbot') {
+  //   return res.status(200).json(botPayload);
+  // } else {
+  //   return res.status(200).end();
+  // }
+  var myJSONStr = '{"test":"success"}';
 
-  if (userName !== 'slackbot') {
-    return res.status(200).json(botPayload);
-  } else {
-    return res.status(200).end();
-  }
+xmlhttp.open('POST', webhook_url, false);
+xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+xmlhttp.send(myJSONStr);
 });
 
 function compare (userMove, botMove)
