@@ -91,11 +91,11 @@ function postMessageToSlack(){
         //             '"mrkdwn_in": ["text", "fields"],' +
         //             '"text": "Just click the site names and start buying. Get *extra reduction with the offer code*, if provided.",' +
         //             '"thumb_url": "http://example.com/thumbnail.jpg" }]}';
-        myJSONStr = '{"attachement": [' +
+        myJSONStr = '{"attachments": [' +
                      '{"text": "Please pick [r]ock, [p]aper or [s]cissors.",' +
                       '"fallback": "You are unable to pick",' +
                       '"color": "#9C1A22",' +
-                      '"attachement_type": "default",' +
+                      '"attachment_type": "default",' +
                       '"actions": [' +
                        '{"name": "rock",' +
                         '"text": "Rock",' +
