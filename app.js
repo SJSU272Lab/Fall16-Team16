@@ -32,12 +32,11 @@ app.post('/startGame', function(req, res) {
     // Body: { user_id: "12345" }
     var botMove = 's';
     responseText = compare(userMove, botMove);
-    // Call Cloudant API with userName, Usermove, Botmove
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("GET", "https://rps-cloudant-db.mybluemix.net/api/match", false)
-    // xhr.send();
-
-    // Body: { user_id: "12345", user_move: "R", botMove: "P" }
+    // Call Cloudant API with user_id, user_move, bot_move
+    // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://rps-cloudant-db.mybluemix.net/api/update");
+    xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
   }
   var botPayload = {
     text : responseText
@@ -63,6 +62,16 @@ function compare (userMove, botMove)
     return "You lose!";
   }
 }
+
+function postMessageToSlack(){
+    var xmlhttp = new XMLHttpRequest(),
+        webhook_url = url-you-saved-from-before,
+        myJSONStr= json-string-from-above;
+    xmlhttp.open('POST', webhook_url, false);
+    xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xmlhttp.send(myJSONStr);
+}
+
 // test route
 app.get('/', function (req, res) { res.status(200).send('Hello world!'); });
 
