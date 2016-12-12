@@ -19,46 +19,67 @@ app.post('/start', function(req, res) {
   postMessageToSlack();
 });
 app.post('/game', function(req, res) {
-  var userID = req.body.user.id;
-  var userName = req.body.user.name;
-  var value = req.body.actions[0].value;
-  // var userName = req.body.user_name;
-  // var userID = req.body.user_id;
-  // var input = req.body.text.trim();
-  // var userMove = input[input.length-1];
-  // var responseText;
-  //
-  // if ((input.length != MaxInputLen) ||
-  //     (userMove != ROCK && userMove != PAPER && userMove != SCISSORS))
-  // {
-  //   responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
-  // }
-  // else {
-  //   // Call GetBestMove API with userName
-  //   // Body: { user_id: "12345" }
-  //   var botMove = 's';
-  //   responseText = compare(userMove, botMove);
-  //   // Call Cloudant API with user_id, user_move, bot_move
-  //   // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", "https://rps-cloudant-db.mybluemix.net/api/update");
-  //   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  //   xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
-  // }
-  // var botPayload = {
-  //   text : 'Hello , welcome to Devdactic Slack channel! I\'ll be your guide.'
-  // };
-  //
-  // if (userName !== 'slackbot') {
-  //   return res.status(200).json(botPayload);
-  // } else {
-  //   return res.status(200).end();
-  // }
-  var myJSONStr = '{"test":"success"}';
+  // var userID = req.body.user.id;
+  // var userName = req.body.user.name;
+  // var value = req.body.actions[0].value;
+  var userName = req.body.user_name;
+  var userID = req.body.user_id;
+  var input = req.body.text.trim();
+  var userMove = input[input.length-1];
+  var responseText;
+	var xhr = new XMLHttpRequest();
 
-xmlhttp.open('POST', webhook_url, false);
-xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-xmlhttp.send(myJSONStr);
+	if (input === "end") {
+		xhr.open("POST", "http://169.44.10.31:8080/end", true);
+		xhr.send(JSON.stringify({ user_id:userID }));
+		if (userName !== 'slackbot') {
+	    return res.status(200).send("Game Ended!");
+	  } else {
+	    return res.status(200).end();
+	  }
+	}
+
+  if ((input.length != MaxInputLen) ||
+      (userMove != ROCK && userMove != PAPER && userMove != SCISSORS))
+  {
+    responseText = "Invalid input! Please enter [r]ock, [p]aper or [s]cissors.";
+  }
+  else {
+    // Call GetBestMove API with userName
+    // Body: { user_id: "12345" }
+
+    // Call Cloudant API with user_id, user_move, bot_move
+    // Body: { user_id: "12345", user_move: "R", bot_move: "P" }
+    xhr.open("POST", "http://169.44.10.31:8080/rps", false);
+    //xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xhr.send(JSON.stringify({ user_id:userID }));
+    //xhr.send(JSON.stringify({user_id:userID, user_move:userMove, bot_move:botMove}));
+		const responseJSON = JSON.parse(xhr.responseText);
+		const botMove = responseJSON.smartMove[0];
+    responseText = compare(userMove, botMove);
+
+		// Update smartMove hashmap
+		xhr.open("PUT", "http://169.44.10.31:8080/rps", false);
+		const updateBody = { user_id: userID, userMove: userMove.toUpperCase(), smartMove: botMove.toUpperCase() };
+		// console.log(updateBody);
+		xhr.send(JSON.stringify(updateBody));
+
+		//console.log(JSON.parse(xhr.responseText));
+	}
+  var botPayload = {
+    text : responseText
+  };
+
+  if (userName !== 'slackbot') {
+    return res.status(200).json(botPayload);
+  } else {
+    return res.status(200).end();
+  }
+//   var myJSONStr = '{"test":"success"}';
+//
+// xmlhttp.open('POST', webhook_url, false);
+// xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+// xmlhttp.send(myJSONStr);
 });
 
 function compare (userMove, botMove)
@@ -67,11 +88,11 @@ function compare (userMove, botMove)
       (userMove === PAPER && botMove === ROCK) ||
       (userMove === SCISSORS && botMove === PAPER))
   {
-    return "You win!";
+    return "Bot move: " + botMove + ". You win!";
   } else if (userMove === botMove) {
-    return "Tie!";
+    return "Bot move: " + botMove + ". Tie!";
   } else {
-    return "You lose!";
+    return "Bot move: " + botMove + ". You lose!";
   }
 }
 
