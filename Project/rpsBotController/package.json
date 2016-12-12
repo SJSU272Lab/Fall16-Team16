@@ -1,11 +1,15 @@
 {
-  "name": "RPSBot",
+  "name": "RPSBotController",
   "version": "0.0.1",
   "description": "CMPE 272 Project",
-  "main": "app.js",
+  "main": "index.js",
   "author": "Hoang Luong, Phu Truong",
   "license": "SJSU",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
+    "botkit": "~0.1.1",
     "express": "^4.x.x",
     "body-parser": "^1.x.x",
     "request": "2.56.x",
