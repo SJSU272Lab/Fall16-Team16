@@ -18,30 +18,26 @@ import com.cloudant.client.api.views.AllDocsResponse;
 
 public class LoadDB {
 	
-	private HashMap<String, Integer> statsMove = new HashMap<String, Integer>();
-	private ArrayList<String> nthCurrentMove = new ArrayList<String>();
-	private String url = "";
-	private String username = "";
-	private String password = "";
+	private String url = "https://799d1774-1866-4be9-9df9-88dadb413617-bluemix:f87e1020edfda16df0b20199c612da70ecaa5db6658efa65ce0a18e823996312@799d1774-1866-4be9-9df9-88dadb413617-bluemix.cloudant.com";
+	private String username = "799d1774-1866-4be9-9df9-88dadb413617-bluemix";
+	private String password = "f87e1020edfda16df0b20199c612da70ecaa5db6658efa65ce0a18e823996312";
 	private CloudantClient client;
 	
 	public static void loadData()
 	{
 		//load data from cloudantDB to statsMove
 		
-	}
-	
-	public void updateMove()
-	{
 		
 	}
-	 public void loadConfigProperties() {
+	
+
+	 public void loadConfigProperties(String path) {
 	        
         InputStream confobj = null;
         
         try {
         	System.out.println(this.getClass().getClassLoader());
-            confobj = new FileInputStream("./src/resources/Config.properties");
+            confobj = new FileInputStream(path);
             Properties propObj = new Properties();
             propObj.load(confobj);
             this.url =(String) propObj.get("url");
@@ -78,63 +74,69 @@ public class LoadDB {
 		}
 	}
 	
-	public void listDBs()
-	{
-		List<String> databases = client.getAllDbs();
-		System.out.println("All my databases : ");
-		for ( String db : databases ) {
-		    System.out.println(db);
-		}
-	}
 	
-	public class RPSexample{
+	public class RPSdata{
 		private String _id = "";
 		private String _rev = null;
 		private String match ="";
-		private String score = "";
-		public RPSexample(String id,String match, String score)
+		
+		public RPSdata(String id,String match)
 		{
 			this._id = id;
 			this.match = match;
-			this.score = score; 
+			
+			
 		}
 		public String getMatch()
 		{
 			return match;
 		}
-		
-		public String getScore()
+		public void setMatch(String match)
 		{
-			return score;
+			this.match = match;
 		}
-		
 		public String toString()
 		{
-			return "id:" + _id + "| match:"+match +"| score:"+score;
+			return "id:" + _id + "| match:"+ match ;
 		}
 	}
 	
-	public void readRPSDB() throws IOException
+	public RPSdata readRPSDB(String _id) throws IOException
 	{
 		Database db = client.database("rockpaperscissordb", false);
 		//int testing = db.view
-		for(int i=1;i<3;i++){
-			RPSexample example = db.find(RPSexample.class , i+"");
-			System.out.println(example);
+		try{
+			RPSdata example = db.find(RPSdata.class, _id);
+			return example;
+		}catch(Exception ex)
+		{
+			return null;
 		}
-		
-		
+	    
 	}
 	
 	
-	public static void main(String[]args) throws IOException
+	public void saveRPSGame(String _id,String newMatch) throws IOException
 	{
+		//read to see if it exist
+		RPSdata data = readRPSDB(_id);
+		String match ="";
+		if(data == null){
+			//save to cloudant
+			match = newMatch;
+			data = new RPSdata(_id, match);
+			Database db = client.database("rockpaperscissordb", false);
+			db.save(data);
+			
+		}else{
+			//concat with new match
+			match = data.getMatch() + newMatch;
+			//save to database
+			data.setMatch(match);
+			Database db = client.database("rockpaperscissordb", false);
+			db.update(data);
+		}
 		
-		LoadDB move = new LoadDB();
-		move.loadConfigProperties();
-		move.connect();
-		//move.listDBs();	
-		move.readRPSDB();
 	}
 	
 }

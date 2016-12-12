@@ -9,8 +9,9 @@ var rpslsAppInfo = angular.module('rpslsApp.info', [])
    .service( 'infoManager', function() {
       var modals = [
          { id: 'author', title: 'Who Made This?', url: 'info/author.html' },
-         { id: 'colophon', title: 'Colophon & Credits', url: 'info/colophon.html' },
-         { id: 'wtf', title: 'WTF RPSLS?', url: 'info/wtf.html' }
+         { id: 'colophon', title: ' Reference', url: 'info/reference.html' },
+         { id: 'wtf', title: 'What is ZeroSum?', url: 'info/wtf.html' }
+
       ];
 
       // Get the array of player data

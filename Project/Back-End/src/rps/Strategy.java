@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class RockPaperScissorController {
+public class Strategy implements StrategyInterface {
+	public static MoveType rotate(int time, MoveType type){
+		int numberOfMoveTypes = MoveType.values().length;
+		return MoveType.values()[(type.getRank()+time)% numberOfMoveTypes];
+	}
+
+	private HashMap<String, Integer> statsMove ;
+	private ArrayList<String> nthCurrentMove;
+	private int[] scores;
+	private String history;
+	private boolean isPrime = false;
 	
-	private HashMap<String, Integer> statsMove = new HashMap<String, Integer>();
-	private ArrayList<String> nthCurrentMove = new ArrayList<String>();
-	
-	private static RockPaperScissorController controller ;
-	
-	
-	private RockPaperScissorController(){};
-	
-	public static RockPaperScissorController getInstance(){
-		if (controller == null) {
-			controller = new RockPaperScissorController() ;
-			controller.loadData();
-			return controller ;
-		}
-		else {
-			return controller ;
-		}
+	public Strategy(boolean isPrime){
+		statsMove = new HashMap<String, Integer>();
+		nthCurrentMove = new ArrayList<String>();
+		nthCurrentMove.add("RP");
+		scores = new int[3];
+		history = "";
+		this.isPrime = isPrime;
 	}
 	
 	private int getNumberOfConcurrency(String serieOfMoves){
@@ -34,41 +34,47 @@ public class RockPaperScissorController {
 		}
 	}
 	
-	public void loadData()
+	
+	public void loadData(String initialRecords)
 	{
-		if(controller!=null){
-			String initialRecords = "PSPRPRPSPSSSSRPPPRPSSSSRRSSP";
-			//RRRPSRRPSRPPSSSR
-			//load data inside hashmap
-			
-			controller.nthCurrentMove.add("RP");
-			controller.nthCurrentMove.add("PPRP");
-			controller.nthCurrentMove.add("PPRPPP");
-			/*
-			for(int i = 0 ; i < nthCurrentMove.size() ; i++)
-			{
-				
-				for(int j = 0 ; j<initialRecords.length() ; j=j+2){
-					if(j == (initialRecords.length() - nthCurrentMove.get(i).length()))
-							break;
-					else{
-						//build a key
-						String key = initialRecords.substring(j, j+nthCurrentMove.get(i).length()+1);
-						if(!statsMove.containsKey(key)){
-							statsMove.put(key, 1);
-						}else{
-							int numberOfConcurrency = statsMove.get(key);
-							statsMove.put(key, numberOfConcurrency+1);
-						}
+		
+		for(int i = 0 ; i < nthCurrentMove.size() ; i++)
+		{
+			for(int j = 0 ; j<initialRecords.length() ; j=j+2){
+				if(j == (initialRecords.length() - nthCurrentMove.get(i).length()))
+						break;
+				else{
+					//build a key
+					String key = initialRecords.substring(j, j+nthCurrentMove.get(i).length()+1);
+					if(!statsMove.containsKey(key)){
+						statsMove.put(key, 1);
+					}else{
+						int numberOfConcurrency = statsMove.get(key);
+						statsMove.put(key, numberOfConcurrency+1);
 					}
 				}
-			}*/
+			}
 		}
+		
+		printHash();
 	}
 	
-	public static int getMaxCurr (int concurr1, int concurr2, int concurr3)
+
+	public void updateStrategy(MoveType userMove, MoveType robotMove)
 	{
-		return 1; // will return either 0,1, or 2 corresponding to Rock, Paper, Scissor
+		if(userMove == robotMove)
+			scores[1]++;
+		else if(Defeat.valueOf(userMove.toString()).getDefeating() == robotMove)
+			scores[2]++;
+		else
+			scores[0]++;
+		//update history of game
+		if(!isPrime)
+			history = history + userMove + robotMove;
+		else
+			history =  history + robotMove + userMove;
+		//updateHashMap
+		updateHashMap(history);
 	}
 	
 	public int getMaxFreqIndex(Object[] integers)
@@ -134,27 +140,24 @@ public class RockPaperScissorController {
 		}
 	}
 	
-	private MoveType guessNextHumanThrow(String match)
+	private MoveType guessNextHumanThrow()
 	{
-		
-		if(match.length() < 2)
+		if(history.length() < 2)
 		{
-			//pick a random between 3 moves Rock, Paper, or Scissors
-			return MoveType.values()[getRandInt(MoveType.values().length)];
+			return MoveType.valueOf("R");
 		}else{
 			//update to the hash map
-			updateHashMap(match);
 			ArrayList<int[]> frequencies = new ArrayList<int[]>();
 			ArrayList<String[]> keys = new ArrayList<String[]>();
 			
 			int start = 2;
 			for(int i = 0 ; i < nthCurrentMove.size() ; i++){
-				if(match.length() < start)
+				if(history.length() < start)
 					break;
 				//split match into 2,4,6 depending on nthCurrentMoveSize
 				int[] frequency = new int[MoveType.values().length];
 				String[] key = new String[MoveType.values().length];
-				String split = match.substring( match.length() - nthCurrentMove.get(i).length()); // --> need to fix the last index
+				String split = history.substring( history.length() - nthCurrentMove.get(i).length()); // --> need to fix the last index
 				for(int j = 0 ; j < MoveType.values().length; j++){
 					//frequencies[i*MoveType.values().length + j] = getNumberOfConcurrency(split + MoveType.values()[j].getSymbol());
 					frequency[j] = getNumberOfConcurrency(split + MoveType.values()[j]);
@@ -185,9 +188,9 @@ public class RockPaperScissorController {
 	}
 	
 	
-	public MoveType getSmartThrow(String match)
+	public MoveType getSmartThrow()
 	{
-		MoveType guessedNextHumanThrow = guessNextHumanThrow(match);
+		MoveType guessedNextHumanThrow = guessNextHumanThrow();
 		return Defeat.valueOf(guessedNextHumanThrow.toString()).getDefeating();
 	}
 	
@@ -200,5 +203,7 @@ public class RockPaperScissorController {
 		} 
 		System.out.println("========================");
 	}
+
 	
+
 }

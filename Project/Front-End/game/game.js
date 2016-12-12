@@ -6,7 +6,25 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
     * Game Manager
     */
 
-   .service( 'gameManager', ['$filter', function($filter) {
+   .service( 'gameManager', ['$filter','$timeout', function($filter,$timeout) {
+      //machine Move
+      var machineMove = {};
+      //connection
+      var connection = new WebSocket('ws://169.44.126.139:8990');
+      connection.onopen = function () {
+          // first we want users to enter their names
+
+      };
+
+      connection.onerror = function (error) {
+          // just in there were some problems with conenction...
+
+      };
+
+      connection.onmessage = function (message ) {
+          connection.token = message.data;
+      };
+
 
       //save history of match
       var match = [];
@@ -18,13 +36,13 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
 
       // Declare the moves
       var moves = {
-         'rock' : { id: 'rock', name: 'Rock', chosen: false, defeats: [
+         'rock' : { id: 'rock', name: 'Rock', sym:'R', chosen: false, defeats: [
             { verb: 'crushes', id: 'scissors' }
          ]},
-         'paper' : { id: 'paper', name: 'Paper', chosen: false, defeats: [
+         'paper' : { id: 'paper', name: 'Paper', sym:'P',chosen: false, defeats: [
             { verb: 'covers', id: 'rock' }
          ]},
-         'scissors' : { id: 'scissors', name: 'Scissors', chosen: false, defeats: [
+         'scissors' : { id: 'scissors', name: 'Scissors',sym:'S', chosen: false, defeats: [
             { verb: 'cut', id: 'paper' }
          ]}
       };
@@ -35,7 +53,13 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
          ties: 0,
          robotWins: 0
       };
-
+      this.sleep = function(ms)
+      {
+          return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      this.getConnection = function(){
+        return connection;
+      }
       this.getMatch = function(){
         return match;
       }
@@ -66,36 +90,53 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
 
       // Pick a random move for the robot player
 
-      this.getRobotMove = function() {
+      this.updateMatch = function(userMove, smartMove)
+      {
+        var socket = this.getConnection();
         var resthttp = new XMLHttpRequest();
-        var url = "http://127.0.0.1:8280/rps";
-        resthttp.open("POST", url, false);
+        var url = "http://169.44.13.218:8080/rps";
+        resthttp.open("PUT", url, false);
         resthttp.setRequestHeader("Content-type", "application/json");
         resthttp.smartMove = {};
         resthttp.onreadystatechange = function () { //Call a function when the state changes.
           if (resthttp.readyState == 4 && resthttp.status == 200) {
-               resthttp.smartMove = JSON.parse(resthttp.responseText);
+
             }
-          }
+        }
+         var socket = this.getConnection();
+         var parameters = {
+         };
+        parameters.user_id = socket.token;
+        parameters.userMove = userMove;
+        parameters.smartMove = smartMove;
+        resthttp.send(JSON.stringify(parameters));
+      }
 
-
+      this.getRobotMove = function() {
+         var resthttp = new XMLHttpRequest();
+         var url = "http://169.44.13.218:8080/rps";
+         resthttp.open("POST", url, false);
+         resthttp.setRequestHeader("Content-type", "application/json");
+         resthttp.smartMove = {};
+         resthttp.onreadystatechange = function () { //Call a function when the state changes.
+           if (resthttp.readyState == 4 && resthttp.status == 200) {
+                resthttp.smartMove = JSON.parse(resthttp.responseText);
+             }
+         }
+          var socket = this.getConnection();
           var parameters = {
-            "match":""
           };
-
+         parameters.user_id = socket.token;
          parameters.match = this.getMatch().join('');
          resthttp.send(JSON.stringify(parameters));
+         parameters.match = this.getMatch().join('');
          this.possibleMoves = this.getMoveData();
-         this.tempMovesList = Object.keys(this.possibleMoves);
-         this.getRandomMove = this.tempMovesList[Math.floor(Math.random() * this.tempMovesList.length)];
          this.robotMoveObject = this.possibleMoves[resthttp.smartMove["smartMove"]];
          return this.robotMoveObject;
       }
 
       // Figure out who won the round and update score
       this.getWinner = function( humanMove, robotMove ) {
-
-
          this.moveData = this.getMoveData();
          this.roundWinner = null;
          this.infoText = "Select your first move below:";
@@ -105,17 +146,17 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
 
          if ( humanMove.id == robotMove.id ) {
             this.roundWinner = 'tie';
-            this.infoText = 'That\'s a draw!' +this.match ;
+            this.infoText = 'That\'s a draw!';
          } else {
             var humanWin = $filter('arrayContains')(humanMove.defeats, robotMove.id);
 
             if ( humanWin ) {
                this.roundWinner = 'human';
-               this.infoText = 'You win! ' + humanMove.name + ' ' + humanWin.verb + ' ' + humanWin.id + '.' + this.match;
+               this.infoText = 'You win! ' + humanMove.name + ' ' + humanWin.verb + ' ' + humanWin.id + '.';
             } else {
                var robotWin = $filter('arrayContains')(robotMove.defeats, humanMove.id);
                this.roundWinner = 'robot';
-               this.infoText = 'Robot wins! ' + robotMove.name + ' ' + robotWin.verb + ' ' + robotWin.id + '.' + this.match;
+               this.infoText = 'Robot wins! ' + robotMove.name + ' ' + robotWin.verb + ' ' + robotWin.id + '.';
             }
          }
 
@@ -158,7 +199,7 @@ var rpslsAppGame = angular.module('rpslsApp.game', [])
          // Get each players' chosen move
          $scope.robotMove = this.game.getRobotMove();
          $scope.humanMove = this.game.getHumanMove();
-
+         this.game.updateMatch($scope.humanMove.sym,$scope.robotMove.sym);
          $scope.results = this.game.getWinner( $scope.humanMove, $scope.robotMove );
 
          // Clear the players' previous move choices

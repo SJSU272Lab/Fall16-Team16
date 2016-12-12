@@ -10,9 +10,9 @@ import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 import org.restlet.service.CorsService;
 
-public class RockPaperScissorServer extends Application {
+public class RockPaperScissorsServer extends Application {
 
-	public RockPaperScissorServer()
+	public RockPaperScissorsServer()
 	{
 		CorsService corsService = new CorsService();         
 	    corsService.setAllowedOrigins((Set<String>) new HashSet(Arrays.asList("*")));
@@ -21,15 +21,16 @@ public class RockPaperScissorServer extends Application {
 	}
     public static void main(String[] args) throws Exception {
        Component server = new Component() ;
-        server.getServers().add(Protocol.HTTP, 8280) ;
-        server.getDefaultHost().attach(new RockPaperScissorServer()) ;
+        server.getServers().add(Protocol.HTTP, 8080) ;
+        server.getDefaultHost().attach(new RockPaperScissorsServer()) ;
         server.start();
     }
 
     @Override
     public Restlet createInboundRoot() {
         Router router = new Router(getContext()) ;
-        router.attach("/rps", RockPaperScissorResource.class);
+        router.attach("/rps", RockPaperScissorsResource.class);
+        router.attach("/end", RockPaperScissorsEndBotResource.class);
         return router;
     }
 }

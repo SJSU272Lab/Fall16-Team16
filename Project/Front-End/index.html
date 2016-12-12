@@ -22,7 +22,9 @@
 
    <body>
       <header class="app-name container">
-         <h1>Rock Paper Scissors Smart Move</h1>
+        <h1>Rock Paper Scissors Smart Move</h1>
+      </div>
+
       </header>
 
       <div class="container" ng-controller="gameController as gameCtrl">
@@ -52,7 +54,24 @@
 
          <section class="game-stats" ng-include src=" 'game/scores.html' "></section>
       </div><!-- end .container -->
-
+      <footer class="app-info" ng-controller="infoController as infoCtrl">
+         <div class="modal-wrapper" ng-repeat="modal in infoCtrl.modalContent">
+            <span><a href="#{{modal.id}}" data-toggle="modal" class="modal-link">{{modal.title}}</a></span>
+            <div class="modal fade" id="{{modal.id}}" tabindex="-1" role="dialog" aria-labelledby="{{modal.id}}Label" aria-hidden="true">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h3 class="modal-title" id="{{modal.id}}">{{modal.title}}</h3>
+                     </div>
+                     <div class="modal-body">
+                        <div ng-include src="modal.url"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
       <!-- Angular app scripts -->
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular-animate.js"></script>
