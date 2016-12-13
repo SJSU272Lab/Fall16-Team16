@@ -26,10 +26,10 @@ When playing rock paper and scissor games, people always have their own strategi
 # Architecture:
 - Using Node.js as middleware
 - Using AngularJS and jQuery to build front-end for the application
-- Spark Streaming will collect human’s throw while playing and save it as archive in the object store for machine’s deep learning to make a smart throw.
-- Backend will be powered either by Spark Core or by TensorFlow to help suggest which throw is good to make against human’s throw.
+- Implement a bot plugin for Slack
+- Back-end is developed by Java and Rest server
 - Cloudant DB will be used to save data
-![snip20161026_24](https://cloud.githubusercontent.com/assets/12701069/19754643/33584b7c-9bc4-11e6-8064-787a93919664.png)
+<img width="766" alt="screen shot 2016-12-12 at 4 40 57 pm" src="https://cloud.githubusercontent.com/assets/8787114/21122878/ce9cab48-c089-11e6-95c4-ae3dca621c5e.png">
 
 #Info
 - The icons in this app were acquired from the [Noun Project](http://www.thenounproject.com)
