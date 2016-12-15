@@ -33,3 +33,10 @@ When playing rock paper and scissor games, people always have their own strategi
 
 #Info
 - The icons in this app were acquired from the [Noun Project](http://www.thenounproject.com)
+
+#Testing Algorithms Meta-Strategy
+- Please make sure that you have java in your class path. Then cd into the folder "Back-end > algorithmtesting", then run "make test"
+- In order to recompile and run from begining, you can run the following command:
+  - cd into the folder "Back-end > algorithmtesting"
+  - make clean
+  - make test
