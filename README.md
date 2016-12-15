@@ -12,17 +12,18 @@ When playing rock paper and scissor games, people always have their own strategi
 - Here is an example record of choice sequence with a length of N past moves such as 3, 5, or 7, etc. In this algorithm, we decide to choose N=3. Assume that an existing record of choice sequences saved so far in the game are (opponent throws are underscored): PRP, RPR, PSR, PRP, SPS, PSS, PRS. Supposed the last game played are PR, so we need to guess what the opponent will throw based on our history matching frequency and the last game (due to N=3). With this assumption, we will try to find what the frequencies are with the following pattern SRR, SRP, SRS . We notice that the pattern SRP exists twice in our history of records; therefore, the chance the opponent will throw in his next move will be P. In order to defeat him, we have to throw S which cuts P paper.
 Assume that the opponent’s throw will be non-random and he or she does not use dice to determine his choice, so the longer we play, the more record of sequences that we record, and the more chance machine will win over the human. There will be a lot of variant of this strategy such as finding the latest match or all history of matches, etc…
 - However, any strategy has its own counter. With this strategy, the counter will be when one record of sequences has a very high frequency then it leads machine to choose same throw for few times until other pattern picks up their own frequencies.  Or another counter of this algorithm is that the opponent will use the same strategy to play against you. Therefore, we need to build a heuristically machine learning algorithm by using a method called meta-strategy. With a strategy you choose, there will be 6 possibilities of choices in this game
-      P0: we will play the move that suggested by your strategy.
-      P1: Assume that your move gets beaten by opponent. You will throw the move that against to your opponent move that beats P0
-      P2: Similarly, you will throw the move that against to the move from the opponent that beats P1
-      P’0: Assume the opponent uses the same strategy P to play. This will have to rotate P0 by 1
-      P’1: try to defeat P’0. Therefore, you can rotate P’0 by 1
-      P’2:  rotate the output from P’1 by 1
+      + P0: we will play the move that suggested by your strategy.
+      + P1: Assume that your move gets beaten by opponent. You will throw the move that against to your opponent move that beats P0
+      + P2: Similarly, you will throw the move that against to the move from the opponent that beats P1
+      + P’0: Assume the opponent uses the same strategy P to play. This will have to rotate P0 by 1
+      + P’1: try to defeat P’0. Therefore, you can rotate P’0 by 1
+      + P’2:  rotate the output from P’1 by 1
 
 - Surely, the output of P’2 will be defeated by P0. A question raised will be among these possibilities called selectors, which choice is the best choice to make against the opponent. We decide to use a method called naïve scoring meaning if the last opponent move is the same as such a selector, we will increase the selector score by 1, decrement its score if it is not matching, and not updating its score if it is a tie. Based on naïve scoring, whose score is the highest will be selected to make a throw against in the next game.
 
 # Experiment
 - We experiment by having different strategies to play against our strategy to see how good the algorithm is. Each opponent strategy we have will play in 500 games against our strategy. We try with 4 different strategies such as throwing the same move, throwing the move that beat a previous move, using the same strategy, and play random. The following is the table of our experiment
+![snip20161214_1](https://cloud.githubusercontent.com/assets/12701069/21208873/d1f68c6c-c225-11e6-80b4-ce81913f8bf3.png)
 
 # Architecture:
 - Using Node.js as middleware
