@@ -27,9 +27,9 @@ Assume that the opponent’s throw will be non-random and he or she does not use
 
 # Architecture:
 - Using Node.js as middleware
-- Using AngularJS and jQuery to build front-end for the application
-- Implement a bot plugin for Slack
-- Back-end is developed by Java and Rest server
+- Using AngularJS and less to build front-end for the application
+- Implement a bot plugin for Slack using nodejs
+- Back-end is developed by Java Core, Restlet, and Jave Socket
 - Cloudant DB will be used to save data
 <img width="766" alt="screen shot 2016-12-12 at 4 40 57 pm" src="https://cloud.githubusercontent.com/assets/8787114/21122878/ce9cab48-c089-11e6-95c4-ae3dca621c5e.png">
 
