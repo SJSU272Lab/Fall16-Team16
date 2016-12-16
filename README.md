@@ -2,13 +2,14 @@
 # Waffle.io: https://waffle.io/SJSU272Lab/Fall16-Team16
 # App URL: http://rpssm.mybluemix.net/
 - To have a good experience, please use this app with Firefox.
+
 # Abstract:
 With the rapidly expanding of machine learning nowadays, there is a trend to build a powerful machine to  challenge smartest human beings in all fields especially in gaming like chess with AlphaGo from Google or Jeopardy with Watson from IBM.  Likewise, our team will take up this trend to build a machine powered by either machine learning platform such as TensorFlow from Google or Spark Analytic Services from IBM to challenge human being in one of the childhood game called Rock Paper Scissors.
 
 
 When playing rock paper and scissor games, people always have their own strategies to play such as making “rock” throw frequently or making the same throw twice in a row. The idea of this project is to build a rock paper scissor powered by Apache Spark with a pattern-recognition engine to find out next coming winning move against human players.
 
-#Algorithm
+# Algorithm
 - The strategy that we use in this game is history matching frequency. It will records all the move made so far including our move and the opponent’s. In order to determine the next move to play, it use a substring matching algorithm to determine the most frequently match substring played most of the time. From the frequency, it will guess what opponent will throw next to decide which move it will throw against it.
 - Here is an example record of choice sequence with a length of N past moves such as 3, 5, or 7, etc. In this algorithm, we decide to choose N=3. Assume that an existing record of choice sequences saved so far in the game are (opponent throws are underscored): PRP, RPR, PSR, PRP, SPS, PSS, PRS. Supposed the last game played are PR, so we need to guess what the opponent will throw based on our history matching frequency and the last game (due to N=3). With this assumption, we will try to find what the frequencies are with the following pattern SRR, SRP, SRS . We notice that the pattern SRP exists twice in our history of records; therefore, the chance the opponent will throw in his next move will be P. In order to defeat him, we have to throw S which cuts P paper.
 Assume that the opponent’s throw will be non-random and he or she does not use dice to determine his choice, so the longer we play, the more record of sequences that we record, and the more chance machine will win over the human. There will be a lot of variant of this strategy such as finding the latest match or all history of matches, etc…
@@ -34,12 +35,12 @@ Assume that the opponent’s throw will be non-random and he or she does not use
 - Cloudant DB will be used to save data
 <img width="766" alt="screen shot 2016-12-12 at 4 40 57 pm" src="https://cloud.githubusercontent.com/assets/8787114/21122878/ce9cab48-c089-11e6-95c4-ae3dca621c5e.png">
 
-#Testing Algorithms Meta-Strategy
+# Testing Algorithms Meta-Strategy
 - Please make sure that you have java in your class path. Then cd into the folder "Back-end > algorithmtesting", then run "make test"
 - In order to recompile and run from begining, you can run the following command:
   + cd into the folder "Back-end > algorithmtesting"
   + make clean
   + make test
 - Note that when running the test, you will see some delay deliberatedly since we put some sleep time for observation between each game. But you can remove sleep time in Test.java and recompile. 
-#Info
+# Info
   - The icons in this app were acquired from the [Noun Project](http://www.thenounproject.com)
