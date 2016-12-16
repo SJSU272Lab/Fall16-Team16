@@ -3,7 +3,8 @@
 # App URL: http://rpssm.mybluemix.net/
 - To have a good experience, please use this app with Firefox.
 # Slack App URL: https://cryptic-ridge-87698.herokuapp.com/login
-_ That URL will lets our app request authorization to private details in your Slack account without getting your password.
+- That URL will lets our app request authorization to private details in your Slack account without getting your password.
+- Use the same URL to wake up the "botrps2" if its status is changed to AWAY.
 
 # Abstract:
 With the rapidly expanding of machine learning nowadays, there is a trend to build a powerful machine to  challenge smartest human beings in all fields especially in gaming like chess with AlphaGo from Google or Jeopardy with Watson from IBM.  Likewise, our team will take up this trend to build a machine powered by either machine learning platform such as TensorFlow from Google or Spark Analytic Services from IBM to challenge human being in one of the childhood game called Rock Paper Scissors.
@@ -43,6 +44,6 @@ Assume that the opponent’s throw will be non-random and he or she does not use
   + cd into the folder "Back-end > algorithmtesting"
   + make clean
   + make test
-- Note that when running the test, you will see some delay deliberatedly since we put some sleep time for observation between each game. But you can remove sleep time in Test.java and recompile. 
+- Note that when running the test, you will see some delay deliberatedly since we put some sleep time for observation between each game. But you can remove sleep time in Test.java and recompile.
 # Info
   - The icons in this app were acquired from the [Noun Project](http://www.thenounproject.com)
