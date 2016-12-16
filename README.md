@@ -5,7 +5,7 @@
 
 # Slack App URL: https://cryptic-ridge-87698.herokuapp.com/login
 - That URL will lets our app request authorization to private details in your Slack account without getting your password.
-- Use the same URL to wake up the "botrps2" if its status is changed to AWAY. 
+- Use the same URL to wake up the "botrps2" if its status is changed to AWAY.
 
 # Abstract:
 With the rapidly expanding of machine learning nowadays, there is a trend to build a powerful machine to  challenge smartest human beings in all fields especially in gaming like chess with AlphaGo from Google or Jeopardy with Watson from IBM.  Likewise, our team will take up this trend to build a machine powered by either machine learning platform such as TensorFlow from Google or Spark Analytic Services from IBM to challenge human being in one of the childhood game called Rock Paper Scissors.
@@ -52,3 +52,5 @@ Assume that the opponent’s throw will be non-random and he or she does not use
 # Contact us:
 - stevenztruong@yahoo.com
 - hoang.luong@sjsu.edu
+- tuanungquoc@gmail.com
+- xuanquangpham@gmail.com
