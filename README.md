@@ -2,6 +2,8 @@
 # Waffle.io: https://waffle.io/SJSU272Lab/Fall16-Team16
 # App URL: http://rpssm.mybluemix.net/
 - To have a good experience, please use this app with Firefox.
+# Slack App URL: https://cryptic-ridge-87698.herokuapp.com/login
+_ That URL will lets our app request authorization to private details in your Slack account without getting your password.
 
 # Abstract:
 With the rapidly expanding of machine learning nowadays, there is a trend to build a powerful machine to  challenge smartest human beings in all fields especially in gaming like chess with AlphaGo from Google or Jeopardy with Watson from IBM.  Likewise, our team will take up this trend to build a machine powered by either machine learning platform such as TensorFlow from Google or Spark Analytic Services from IBM to challenge human being in one of the childhood game called Rock Paper Scissors.
